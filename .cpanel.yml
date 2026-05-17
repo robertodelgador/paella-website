@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/$USER/paella.indelrue.com/
+    - /bin/cp -r css $DEPLOYPATH
+    - /bin/cp -r js $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
