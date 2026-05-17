@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Paella</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-icon">🥘</div>
+      <h1>P A E L L A</h1>
+      <p class="hero-sub">Calculadora de Ingredientes</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Inputs -->
+    <section class="card inputs-card">
+      <h2 class="section-title">Configuración</h2>
+
+      <div class="input-group primary-input">
+        <label for="personas">Número de Personas</label>
+        <div class="number-control">
+          <button class="btn-step" onclick="step('personas', -1)">−</button>
+          <input type="number" id="personas" value="5" min="1" max="500" oninput="calculate()" />
+          <button class="btn-step" onclick="step('personas', 1)">+</button>
+        </div>
+      </div>
+
+      <details class="advanced-toggle">
+        <summary>Ajustes avanzados</summary>
+        <div class="advanced-grid">
+          <div class="input-group">
+            <label for="caldo">Caldo de Marisco Disponible</label>
+            <div class="input-row">
+              <input type="number" id="caldo" value="6" min="0" step="0.5" oninput="calculate()" />
+              <span class="unit">Litros</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Paellera — Diámetro Arriba</label>
+            <div class="input-row">
+              <input type="number" id="diam_arriba" value="83" min="1" oninput="calculate()" />
+              <span class="unit">cm</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Paellera — Diámetro Abajo</label>
+            <div class="input-row">
+              <input type="number" id="diam_abajo" value="72" min="1" oninput="calculate()" />
+              <span class="unit">cm</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Paellera — Alto</label>
+            <div class="input-row">
+              <input type="number" id="alto" value="11.5" min="1" step="0.5" oninput="calculate()" />
+              <span class="unit">cm</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Results -->
+    <section class="results" id="results">
+
+      <!-- Paellera info -->
+      <div class="card paellera-card" id="paellera-info">
+        <h2 class="section-title">Capacidad de la Paellera</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat-value" id="vol-litros">—</span>
+            <span class="stat-label">Litros</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="vol-galones">—</span>
+            <span class="stat-label">Galones</span>
+          </div>
+          <div class="stat">
+            <span class="stat-value" id="vol-tazas">—</span>
+            <span class="stat-label">Tazas</span>
+          </div>
+          <div class="stat highlight">
+            <span class="stat-value" id="personas-cap">—</span>
+            <span class="stat-label">Personas (capacidad)</span>
+          </div>
+        </div>
+        <div class="capacity-bar-wrap">
+          <div class="capacity-bar-label">
+            <span>Uso de la paellera</span>
+            <span id="capacity-pct">—</span>
+          </div>
+          <div class="capacity-bar">
+            <div class="capacity-fill" id="capacity-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ingredients -->
+      <div class="card ingredients-card">
+        <h2 class="section-title">Ingredientes</h2>
+
+        <div class="ing-category">
+          <h3 class="cat-title">🌾 Base</h3>
+          <div class="ing-list">
+            <div class="ing-row" id="arroz-lbs"></div>
+            <div class="ing-row" id="arroz-tazas"></div>
+          </div>
+        </div>
+
+        <div class="ing-category">
+          <h3 class="cat-title">🦐 Mariscos</h3>
+          <div class="ing-list">
+            <div class="ing-row" id="camaron"></div>
+            <div class="ing-row" id="camaron-adorno"></div>
+            <div class="ing-row" id="calamar"></div>
+            <div class="ing-row" id="almeja"></div>
+          </div>
+        </div>
+
+        <div class="ing-category">
+          <h3 class="cat-title">🍗 Carnes</h3>
+          <div class="ing-list">
+            <div class="ing-row" id="pollo"></div>
+            <div class="ing-row" id="chorizo"></div>
+          </div>
+        </div>
+
+        <div class="ing-category">
+          <h3 class="cat-title">🥕 Vegetales y Especias</h3>
+          <div class="ing-list">
+            <div class="ing-row" id="cebolla"></div>
+            <div class="ing-row" id="tomates"></div>
+            <div class="ing-row" id="zanahoria"></div>
+            <div class="ing-row" id="alberja"></div>
+            <div class="ing-row" id="chile"></div>
+            <div class="ing-row" id="ajo"></div>
+            <div class="ing-row" id="azafran"></div>
+          </div>
+        </div>
+
+        <div class="ing-category">
+          <h3 class="cat-title">🫒 Líquidos y Condimentos</h3>
+          <div class="ing-list">
+            <div class="ing-row" id="aceite"></div>
+            <div class="ing-row" id="sal-oz"></div>
+            <div class="ing-row" id="sal-cucharaditas"></div>
+            <div class="ing-row" id="liquido-total"></div>
+            <div class="ing-row" id="agua-adicional"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reference table -->
+      <div class="card ref-card">
+        <h2 class="section-title">Tabla de Referencia</h2>
+        <table class="ref-table">
+          <thead>
+            <tr><th>Ingrediente</th><th>Equivalencia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Arroz crudo — 1 lb</td><td>2.35 tazas crudas / 10.105 tazas cocidas / 18.8 oz fluidas</td></tr>
+            <tr><td>Arroz crudo — 1 taza</td><td>6.8 oz peso / 8 oz fluidas / 4.3 tazas cocidas</td></tr>
+            <tr><td>Cebolla grande — 1 unidad</td><td>8.6 oz peso</td></tr>
+            <tr><td>Ajo — 1 cabeza</td><td>≈ 10 dientes</td></tr>
+            <tr><td>Calamar — 1 lb</td><td>0.3 lbs limpio (solo cabeza)</td></tr>
+            <tr><td>Camarón mediano — 1 lb</td><td>0.5 lbs pelado sin cabeza / ≈ 18 camarones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Receta original · <a href="https://indelrue.com">indelrue.com</a></p>
+  </footer>
+
+  <script src="js/calculator.js"></script>
+</body>
+</html>
